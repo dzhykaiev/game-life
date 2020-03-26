@@ -9,12 +9,14 @@ const Game = observer(() => {
   const [ms, setMs] = useState<number>(400);
   const [isTheGameOn, switchOn] = useState<boolean>(false);
   useEffect(() => {
-    const effect = setInterval(() => {
-      GameStore.tick();
-    }, ms);
-    return () => {
-      clearInterval(effect);
-    };
+    if (isTheGameOn) {
+      const effect = setInterval(() => {
+        GameStore.tick();
+      }, ms);
+      return () => {
+        clearInterval(effect);
+      };
+    }
   }, [isTheGameOn, ms]);
   return (
     <div>
