@@ -1,0 +1,19 @@
+.Grid {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.Row {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+
+.Cell {
+  box-shadow: inset 0px 0px 0px 1px #ccc;
+  background-color: #fff;
+  &.alive {
+    background-color: #000;
+  }
+}

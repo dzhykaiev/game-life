@@ -1,0 +1,25 @@
+.ControlPanel {
+  width: 500px;
+  margin: auto;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+.Form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.Field {
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+  span {
+    font-style: italic;
+  }
+}
+
+.Button {
+  width: 100%;
+  margin-top: 10px;
+}
