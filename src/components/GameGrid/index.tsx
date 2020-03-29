@@ -1,35 +1,45 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Game as GameStoreType } from "../../containers/Game/Store";
-import uniqid from "uniqid";
 import { observer } from "mobx-react";
-import s from "./GameGrid.module.scss";
 type Props = {
   gameStore: GameStoreType;
 };
 
 const GameGrid = observer((props: Props) => {
-  const cellSize = 500 / props.gameStore.gridSize;
-  const rowSize = 500 / props.gameStore.gridList.length;
+  // Canvas size
+  const canvasWidth: number = 500;
+  const canvasHeight: number = 500;
+  // Single square size
+  const cellHeight: number = canvasHeight / props.gameStore.gridSize;
+  const cellWidth: number = canvasWidth / props.gameStore.gridList.length;
+  // X * Y sizes
+  const gridSize: number = props.gameStore.gridSize;
+  const gridRowSize: number = props.gameStore.gridList.length;
+  // Canvas
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ctx = canvasRef.current?.getContext("2d");
+  // Square
+  for (let i = 0, y = 0; i < gridSize; i++, y += cellHeight) {
+    for (let j = 0, x = 0; j < gridRowSize; j++, x += cellWidth) {
+      if (ctx) {
+        ctx.fillStyle = props.gameStore.gridList[i][j] ? "black" : "white";
+        ctx.strokeStyle = "#ccc";
+        ctx.strokeRect(x, y, cellHeight, cellWidth);
+        ctx.fillRect(x, y, cellHeight - 1, cellWidth - 1);
+      }
+    }
+  }
   return (
-    <div className={s.Grid}>
-      {props.gameStore.gridList?.map(row => (
-        <div
-          className={s.Row}
-          key={"row-" + uniqid()}
-          style={{ height: rowSize }}
-        >
-          {row.map(cell => {
-            return (
-              <div
-                key={"cell-" + uniqid()}
-                className={`${s.Cell} ${cell ? s.alive : ""}`}
-                style={{ width: cellSize, height: cellSize }}
-              ></div>
-            );
-          })}
-        </div>
-      ))}
-    </div>
+    <canvas
+      style={{
+        border: "1px solid #ccc",
+        margin: "20px auto",
+        display: "block"
+      }}
+      ref={canvasRef}
+      width={canvasWidth}
+      height={canvasHeight}
+    ></canvas>
   );
 });
 
