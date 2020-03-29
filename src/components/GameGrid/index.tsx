@@ -25,16 +25,16 @@ const GameGrid = observer((props: Props) => {
         ctx.fillStyle = props.gameStore.gridList[i][j] ? "black" : "white";
         ctx.strokeStyle = "#ccc";
         ctx.strokeRect(x, y, cellHeight, cellWidth);
-        ctx.fillRect(x, y, cellHeight - 1, cellWidth - 1);
+        ctx.fillRect(x, y, cellHeight, cellWidth);
       }
     }
   }
   return (
     <canvas
       style={{
-        border: "1px solid #ccc",
         margin: "20px auto",
-        display: "block"
+        display: "block",
+        border: "1px solid #ccc"
       }}
       ref={canvasRef}
       width={canvasWidth}
